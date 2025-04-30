@@ -25,9 +25,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-800`}
       >
-        {children}
+        <header className="bg-white shadow-md py-4">
+          <div className="max-w-6xl mx-auto px-4">
+            <h1 className="text-2xl font-bold">Panaderia Ubatan</h1>
+          </div>
+        </header>
+        <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
+        <footer className="bg-gray-100 py-4 mt-8">
+          <div className="max-w-6xl mx-auto text-center text-sm text-gray-500">
+            © 2025 Breadstore. All rights reserved.
+          </div>
+        </footer>
       </body>
     </html>
   );

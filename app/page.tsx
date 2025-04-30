@@ -1,103 +1,96 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+// components/BakeryList.tsx
+import { useState } from "react";
+import BakeryItem from "./components/BakeryItem";
+import { useRouter } from "next/navigation";
+
+const items = [
+  {
+    name: "Croissant",
+    japanese: "クロワッサ",
+    image: "/images/パン１.jpeg",
+    describe:
+      "バターの香りが広がるサクサクの層。朝のひとときを特別にする一品です。",
+    price: 1000,
+  },
+  {
+    name: "Baguette",
+    japanese: "バゲット",
+    image: "/images/パン２.jpeg",
+    describe:
+      "外はカリッと、中はもっちり。フランスの伝統が息づく本格派バゲット。",
+    price: 2000,
+  },
+  {
+    name: "Bagel",
+    japanese: "ベーグル",
+    image: "/images/パン３.jpeg",
+    describe:
+      "ぎゅっと詰まった生地の食感がクセになる。シンプルだからこそ味わえる深い味わい。",
+    price: 150,
+  },
+  {
+    name: "White Bread",
+    japanese: "食パン",
+    image: "/images/パン４.jpeg",
+    describe:
+      "ふんわり柔らか、どんな料理にも寄り添う万能な一品。毎日の食卓にどうぞ。",
+    price: 2500,
+  },
+  {
+    name: "Croissant２",
+    japanese: "クロワッサ",
+    image: "/images/パン１.jpeg",
+    describe:
+      "バターの香りが広がるサクサクの層。朝のひとときを特別にする一品です。",
+    price: 1000000,
+  },
+];
+
+export default function BakeryList() {
+  const [total, setTotal] = useState(0);
+  const router = useRouter();
+
+  const handleCountChange = (price: number, count: number) => {
+    setTotal((prevTotal) => prevTotal + price * count);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+    <div className="max-w-6xl mx-auto py-10">
+      <h1 className="text-5xl font-extrabold text-center mb-4 text-gray-800">
+        BAKERY
+      </h1>
+      <h2 className="text-xl text-center text-gray-600 mb-12">
+        美味しいパンをお届けします
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {items.map((item) => (
+          <BakeryItem
+            key={item.name}
+            {...item}
+            onCountChange={handleCountChange}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        ))}
+      </div>
+      <div className="text-center text-2xl font-bold mt-8 bg-white py-4 shadow-md sticky bottom-0">
+        合計額：¥{new Intl.NumberFormat("ja-JP").format(total)}
+        <button
+          className={`ml-4 px-6 py-2 rounded text-white font-bold transform ${
+            total > 0
+              ? "bg-red-500 hover:bg-red-600 active:scale-95"
+              : "bg-gray-300 cursor-not-allowed"
+          }`}
+          disabled={total === 0}
+          onClick={() => {
+            if (total > 0) {
+              router.push("/checkout");
+            }
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          購入画面へ進む
+        </button>
+      </div>
     </div>
   );
 }
