@@ -1,9 +1,8 @@
 "use client";
 
-// components/BakeryList.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import BakeryItem from "./components/BakeryItem";
-import { useRouter } from "next/navigation";
 
 const items = [
   {
@@ -38,22 +37,37 @@ const items = [
       "ふんわり柔らか、どんな料理にも寄り添う万能な一品。毎日の食卓にどうぞ。",
     price: 2500,
   },
-  {
-    name: "Croissant２",
-    japanese: "クロワッサ",
-    image: "/images/パン１.jpeg",
-    describe:
-      "バターの香りが広がるサクサクの層。朝のひとときを特別にする一品です。",
-    price: 1000000,
-  },
 ];
 
 export default function BakeryList() {
-  const [total, setTotal] = useState(0);
+  const [selectedItems, setSelectedItems] = useState<
+    { name: string; count: number; price: number }[]
+  >([]);
+  const searchParams = useSearchParams();
   const router = useRouter();
 
-  const handleCountChange = (price: number, count: number) => {
-    setTotal((prevTotal) => prevTotal + price * count);
+  // クエリパラメータから選択済みのアイテムを取得して反映
+  useEffect(() => {
+    const itemsFromQuery = searchParams.get("items");
+    if (itemsFromQuery) {
+      setSelectedItems(JSON.parse(decodeURIComponent(itemsFromQuery)));
+    }
+  }, [searchParams]);
+
+  const handleCountChange = (name: string, price: number, count: number) => {
+    setSelectedItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.name === name);
+      if (existingItem) {
+        const updatedItems = prevItems.map((item) =>
+          item.name === name
+            ? { ...item, count: item.count + count }
+            : item
+        );
+        return updatedItems.filter((item) => item.count > 0); // 個数が0のアイテムを削除
+      } else {
+        return [...prevItems, { name, count, price }];
+      }
+    });
   };
 
   return (
@@ -61,31 +75,33 @@ export default function BakeryList() {
       <h1 className="text-5xl font-extrabold text-center mb-4 text-gray-800">
         BAKERY
       </h1>
-      <h2 className="text-xl text-center text-gray-600 mb-12">
-        美味しいパンをお届けします
-      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {items.map((item) => (
-          <BakeryItem
-            key={item.name}
-            {...item}
-            onCountChange={handleCountChange}
-          />
-        ))}
+        {items.map((item) => {
+          // 選択済みの個数を取得
+          const selectedItem = selectedItems.find((i) => i.name === item.name);
+          const count = selectedItem ? selectedItem.count : 0;
+
+          return (
+            <BakeryItem
+              key={item.name}
+              {...item}
+              initialCount={count} // 保持している個数を反映
+              onCountChange={(price, count) =>
+                handleCountChange(item.name, price, count)
+              }
+            />
+          );
+        })}
       </div>
-      <div className="text-center text-2xl font-bold mt-8 bg-white py-4 shadow-md sticky bottom-0">
-        合計額：¥{new Intl.NumberFormat("ja-JP").format(total)}
+      <div className="text-center mt-8">
         <button
-          className={`ml-4 px-6 py-2 rounded text-white font-bold transform ${
-            total > 0
-              ? "bg-red-500 hover:bg-red-600 active:scale-95"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-          disabled={total === 0}
+          className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg shadow-md hover:bg-blue-600 transition"
           onClick={() => {
-            if (total > 0) {
-              router.push("/checkout");
-            }
+            router.push(
+              `/purchase/check?items=${encodeURIComponent(
+                JSON.stringify(selectedItems)
+              )}`
+            );
           }}
         >
           購入画面へ進む
