@@ -27,17 +27,37 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-800`}
       >
-        <header className="bg-white shadow-md py-4">
-          <div className="max-w-6xl mx-auto px-4">
-            <h1 className="text-2xl font-bold">Panaderia Ubatan</h1>
+        <header className="bg-white shadow-md py-4 fixed top-0 left-0 w-full z-50">
+          <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <span className="text-2xl font-bold">Ubatan</span>
+            </div>
+            <nav className="flex items-center space-x-6">
+              <a href="#products" className="text-gray-700 hover:text-blue-500 font-medium">パン一覧</a>
+              <a href="#mypage" className="text-gray-700 hover:text-blue-500 font-medium">マイページ</a>
+              <a href="#cart" className="text-gray-700 hover:text-blue-500 font-medium flex items-center">
+                カート <span className="ml-1">🛒</span>
+              </a>
+            </nav>
           </div>
         </header>
-        <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
-        <footer className="bg-gray-100 py-4 mt-8">
-          <div className="max-w-6xl mx-auto text-center text-sm text-gray-500">
-            © 2025 Breadstore. All rights reserved.
+        <main className="mx-auto pt-16">{children}</main>
+        <footer className="bg-gray-100 py-8 mt-12">
+        <div className="max-w-6xl mx-auto text-center text-sm text-gray-500 space-y-2">
+          <div className="flex flex-wrap justify-center gap-4 mb-2">
+            <a href="#shop" className="hover:underline">店舗情報</a>
+            <a href="#faq" className="hover:underline">よくある質問</a>
+            <a href="#contact" className="hover:underline">お問い合わせ</a>
+            <a href="#law" className="hover:underline">特商法表記</a>
+            <a href="#privacy" className="hover:underline">プライバシーポリシー</a>
           </div>
-        </footer>
+          <div className="flex justify-center space-x-4">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
+          </div>
+          <div>© 2025 Ubatan. All rights reserved.</div>
+        </div>
+      </footer>
       </body>
     </html>
   );
