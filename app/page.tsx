@@ -16,32 +16,28 @@ const items = [
     name: "Croissant",
     japanese: "クロワッサ",
     image: "/images/パン１.jpeg",
-    describe:
-      "バターの香りが広がるサクサクの層。朝のひとときを特別にする一品です。",
+    describe: "バターの香りが広がるサクサクの層。朝のひとときを特別にする一品です。",
     price: 1000,
   },
   {
     name: "Baguette",
     japanese: "バゲット",
     image: "/images/パン２.jpeg",
-    describe:
-      "外はカリッと、中はもっちり。フランスの伝統が息づく本格派バゲット。",
+    describe: "外はカリッと、中はもっちり。フランスの伝統が息づく本格派バゲット。",
     price: 2000,
   },
   {
     name: "Bagel",
     japanese: "ベーグル",
     image: "/images/パン３.jpeg",
-    describe:
-      "ぎゅっと詰まった生地の食感がクセになる。シンプルだからこそ味わえる深い味わい。",
+    describe: "ぎゅっと詰まった生地の食感がクセになる。シンプルだからこそ味わえる深い味わい。",
     price: 150,
   },
   {
     name: "White Bread",
     japanese: "食パン",
     image: "/images/パン４.jpeg",
-    describe:
-      "ふんわり柔らか、どんな料理にも寄り添う万能な一品。毎日の食卓にどうぞ。",
+    describe: "ふんわり柔らか、どんな料理にも寄り添う万能な一品。毎日の食卓にどうぞ。",
     price: 2500,
   },
 ];
@@ -53,7 +49,6 @@ export default function BakeryList() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // クエリパラメータから選択済みのアイテムを取得して反映
   useEffect(() => {
     const itemsFromQuery = searchParams.get("items");
     if (itemsFromQuery) {
@@ -68,7 +63,7 @@ export default function BakeryList() {
         const updatedItems = prevItems.map((item) =>
           item.name === name ? { ...item, count: item.count + count } : item
         );
-        return updatedItems.filter((item) => item.count > 0); // 個数が0のアイテムを削除
+        return updatedItems.filter((item) => item.count > 0);
       } else {
         return [...prevItems, { name, count, price }];
       }
@@ -76,59 +71,63 @@ export default function BakeryList() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* メインビジュアル（スライダー風） */}
-      <section className="relative w-full h-[60vh] flex items-center justify-center">
+    <div className=" min-h-screen">
+      {/* メインビジュアル */}
+      <section className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden">
         <img
           src="/images/見出し決定250505_2.jpeg"
           alt="メインビジュアル"
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover z-0 brightness-95"
         />
         <div className="relative z-10 text-center">
-          <h1 className={`text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-6 ${cormorant.className}`}>
-            焼きたての香りをお届け！
+          <h1 className={`text-4xl md:text-5xl font-bold text-white drop-shadow-2xl mb-8 tracking-wider ${cormorant.className}`}>
+            Sarap ng Tinapay!<br />
+            <span className="text-lg md:text-2xl block mt-2 font-normal tracking-normal">焼きたての香りをお届け！</span>
           </h1>
-          <button className="px-8 py-3 bg-yellow-400 text-white font-bold rounded-full shadow-lg hover:bg-yellow-500 transition">
+          <button className="px-10 py-4 bg-[#ffb07c] text-white font-bold rounded-full shadow-xl hover:bg-[#ff6f61] transition text-lg tracking-wide border-2 border-white">
             今月のおすすめパンを見る
           </button>
         </div>
       </section>
 
       {/* おすすめ商品セクション */}
-      <section className="max-w-6xl mx-auto py-12" id="products">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8 flex items-center">
-          <span className="mr-2">🛍️</span> おすすめ商品
+      <section className="max-w-6xl mx-auto py-16" id="products">
+        <h2 className="text-3xl font-extrabold text-[#a05a2c] mb-10 flex items-center justify-center gap-2 tracking-wider">
+          <span className="text-2xl">🛍️</span> Pinoyおすすめパン
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
-            <span className="text-4xl mb-2">🍓</span>
-            <div className="font-bold mb-2">苺のデニッシュ</div>
-            <button className="mt-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">カートに追加</button>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+          <div className="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center hover:scale-105 transition border-2 border-[#ffe29a]">
+            <span className="text-5xl mb-4">🍠</span>
+            <div className="font-bold text-lg mb-2 text-[#a05a2c]">ウベパン</div>
+            <p className="text-[#ff6f61] mb-4 text-center">フィリピン定番の紫芋「ウベ」を使ったもちもちパン。</p>
+            <button className="mt-auto px-6 py-2 bg-[#ffb07c] text-white rounded-full font-bold shadow hover:bg-[#ff6f61] transition">カートに追加</button>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
-            <span className="text-4xl mb-2">🥐</span>
-            <div className="font-bold mb-2">バタークロワッサン</div>
-            <button className="mt-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">カートに追加</button>
+          <div className="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center hover:scale-105 transition border-2 border-[#ffe29a]">
+            <span className="text-5xl mb-4">🥯</span>
+            <div className="font-bold text-lg mb-2 text-[#a05a2c]">パン・デ・サル</div>
+            <p className="text-[#ff6f61] mb-4 text-center">朝食の定番！外はカリッと中はふんわり。</p>
+            <button className="mt-auto px-6 py-2 bg-[#ffb07c] text-white rounded-full font-bold shadow hover:bg-[#ff6f61] transition">カートに追加</button>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
-            <span className="text-4xl mb-2">🍞</span>
-            <div className="font-bold mb-2">米粉の食パン</div>
-            <button className="mt-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">カートに追加</button>
+          <div className="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center hover:scale-105 transition border-2 border-[#ffe29a]">
+            <span className="text-5xl mb-4">🧀</span>
+            <div className="font-bold text-lg mb-2 text-[#a05a2c]">エンサイマダ</div>
+            <p className="text-[#ff6f61] mb-4 text-center">チーズとバターの甘じょっぱいごほうびパン。</p>
+            <button className="mt-auto px-6 py-2 bg-[#ffb07c] text-white rounded-full font-bold shadow hover:bg-[#ff6f61] transition">カートに追加</button>
           </div>
         </div>
-        <div className="text-right mt-4">
-          <a href="#all-breads" className="text-blue-500 hover:underline font-medium">▶︎ すべてのパンを見る</a>
+        <div className="text-right mt-8">
+          <a href="#all-breads" className="text-[#a05a2c] hover:underline font-semibold text-lg">▶︎ すべてのパンを見る</a>
         </div>
       </section>
 
       {/* 定期便バナー */}
-      <section className="bg-yellow-100 py-8">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between px-6">
+      <section className="bg-[#f4a572] py-10 my-8 rounded-2xl shadow-inner">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between px-8">
           <div className="flex items-center mb-4 md:mb-0">
-            <span className="text-3xl mr-3">🧺</span>
-            <span className="text-lg font-bold">パンの定期便 始めました！</span>
+            <span className="text-4xl mr-4">🧺</span>
+            <span className="text-xl font-bold text-[#a05a2c]">パンの定期便 Simulan na!</span>
           </div>
-          <button className="px-6 py-2 bg-yellow-400 text-white font-bold rounded-full shadow hover:bg-yellow-500 transition">
+          <button className="px-8 py-3 bg-[#ffb07c] text-white font-bold rounded-full shadow hover:bg-[#ff6f61] transition text-lg border-2 border-white">
             詳しく見る
           </button>
         </div>
@@ -136,58 +135,63 @@ export default function BakeryList() {
 
       {/* カテゴリ別セクション */}
       <section className="max-w-6xl mx-auto py-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-          <span className="mr-2">🥖</span> カテゴリで探す
+        <h2 className="text-2xl font-extrabold text-[#a05a2c] mb-8 flex items-center gap-2">
+          <span>🥖</span> カテゴリで探す
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow text-center font-bold">食パン</div>
-          <div className="bg-white p-4 rounded-lg shadow text-center font-bold">菓子パン</div>
-          <div className="bg-white p-4 rounded-lg shadow text-center font-bold">惣菜パン</div>
-          <div className="bg-white p-4 rounded-lg shadow text-center font-bold">季節限定</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div className="bg-white p-6 rounded-xl shadow text-center font-bold hover:bg-[#ffe29a] transition cursor-pointer text-[#a05a2c]">食パン</div>
+          <div className="bg-white p-6 rounded-xl shadow text-center font-bold hover:bg-[#ffe29a] transition cursor-pointer text-[#a05a2c]">菓子パン</div>
+          <div className="bg-white p-6 rounded-xl shadow text-center font-bold hover:bg-[#ffe29a] transition cursor-pointer text-[#a05a2c]">惣菜パン</div>
+          <div className="bg-white p-6 rounded-xl shadow text-center font-bold hover:bg-[#ffe29a] transition cursor-pointer text-[#a05a2c]">季節限定</div>
         </div>
       </section>
 
       {/* パン作りのこだわりセクション */}
-      <section className="max-w-6xl mx-auto py-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-          <span className="mr-2">🧁</span> パン作りのこだわり
+      <section className="max-w-6xl mx-auto py-16">
+        <h2 className="text-2xl font-extrabold text-[#a05a2c] mb-8 flex items-center gap-2">
+          <span>🧁</span> パン作りのこだわり
         </h2>
-        <div className="bg-white p-6 rounded-lg shadow text-center">
-          地元素材・無添加・毎日焼きたて...<br />
-          <button className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full font-bold hover:bg-blue-600 transition">詳しく読む</button>
+        <div className="bg-white p-10 rounded-2xl shadow-lg text-center border-2 border-[#ffe29a]">
+          <p className="text-lg text-[#ff6f61] mb-6">
+            地元素材・無添加・毎日焼きたて。<br />
+            ひとつひとつ丁寧に、心を込めて焼き上げています。
+          </p>
+          <button className="px-8 py-3 bg-[#ffb07c] text-white rounded-full font-bold hover:bg-[#ff6f61] transition text-lg border-2 border-white">詳しく読む</button>
         </div>
       </section>
 
       {/* お知らせ / ブログセクション */}
       <section className="max-w-6xl mx-auto py-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-          <span className="mr-2">📰</span> お知らせ・ブログ
+        <h2 className="text-2xl font-extrabold text-[#a05a2c] mb-8 flex items-center gap-2">
+          <span>📰</span> お知らせ・ブログ
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="font-bold mb-2">5月限定パン登場！</div>
-            <div className="text-gray-600 text-sm">2025/05/01</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="bg-white p-6 rounded-xl shadow border-2 border-[#ffe29a]">
+            <div className="font-bold mb-2 text-lg text-[#a05a2c]">5月限定パン登場！</div>
+            <div className="text-[#ff6f61] text-sm">2025/05/01</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="font-bold mb-2">母の日ギフト予約受付中</div>
-            <div className="text-gray-600 text-sm">2025/04/25</div>
+          <div className="bg-white p-6 rounded-xl shadow border-2 border-[#ffe29a]">
+            <div className="font-bold mb-2 text-lg text-[#a05a2c]">母の日ギフト予約受付中</div>
+            <div className="text-[#ff6f61] text-sm">2025/04/25</div>
           </div>
         </div>
       </section>
 
       {/* お客様の声 / レビュー */}
       <section className="max-w-6xl mx-auto py-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-          <span className="mr-2">🦶</span> お客様の声
+        <h2 className="text-2xl font-extrabold text-[#a05a2c] mb-8 flex items-center gap-2">
+          <span>🦶</span> お客様の声
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-yellow-400 text-xl mb-2">⭐️⭐️⭐️⭐️⭐️</div>
-            <div>「ふわふわで最高！」</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="bg-white p-6 rounded-xl shadow flex flex-col border-2 border-[#ffe29a]">
+            <div className="text-yellow-400 text-2xl mb-2">⭐️⭐️⭐️⭐️⭐️</div>
+            <div className="text-[#a05a2c] mb-2">「ふわふわで最高！」</div>
+            <div className="text-sm text-[#ff6f61]">30代女性・東京都</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-yellow-400 text-xl mb-2">⭐️⭐️⭐️⭐️</div>
-            <div>「配送も丁寧でリピ確定」</div>
+          <div className="bg-white p-6 rounded-xl shadow flex flex-col border-2 border-[#ffe29a]">
+            <div className="text-yellow-400 text-2xl mb-2">⭐️⭐️⭐️⭐️</div>
+            <div className="text-[#a05a2c] mb-2">「配送も丁寧でリピ確定」</div>
+            <div className="text-sm text-[#ff6f61]">40代男性・神奈川県</div>
           </div>
         </div>
       </section>
