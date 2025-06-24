@@ -4,7 +4,9 @@ import { useState } from "react";
 // import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const router = useRouter();
-  
+  // const router = useRouter();
+
   return (
     <html lang="en">
       <body
@@ -38,12 +40,16 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto px-4 flex items-center justify-between relative">
             {/* ロゴ：常に中央配置 */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0 flex-1 flex justify-center md:justify-start">
-                <img
-                  onClick={() => router.push("#www")}
-                  src="/images/Ubatan-logo.png"
+              <Link href="/">
+                <Image
+                  src="images/Ubatan-logo.png"
                   alt="Ubatan ロゴ"
+                  width={120} // ← 必須: 適切な幅を指定
+                  height={40} // ← 必須: 適切な高さを指定
                   className="h-10 w-auto cursor-pointer"
+                  priority
                 />
+              </Link>
             </div>
             {/* PCナビ */}
             <nav className="hidden md:flex items-center space-x-6 ml-auto">
